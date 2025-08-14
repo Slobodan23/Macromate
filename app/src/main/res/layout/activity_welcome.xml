@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2A2828"
+    tools:context=".auth.WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ham" />
+
+    <Button
+        android:id="@+id/btLogin"
+        android:layout_width="172dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="2dp"
+        android:backgroundTint="#7D974D"
+        android:text="LOGIN"
+        app:layout_constraintBottom_toTopOf="@+id/btRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btRegister"
+        android:layout_width="171dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="#7C964C"
+        android:text="REGISTER"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tMacro"
+        android:layout_width="259dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="24dp"
+        android:text="MACRO"
+        android:textColor="#E2E0E0"
+        android:textSize="70sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tMate"
+        android:layout_width="197dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="-1dp"
+        android:text="MATE"
+        android:textColor="#E0DEDE"
+        android:textSize="70sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/btLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tMacro"
+        app:layout_constraintVertical_bias="0.002" />
+</androidx.constraintlayout.widget.ConstraintLayout>
