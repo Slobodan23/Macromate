@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Mode Colors -->
+    <color name="background_color">#2A2828</color>
+    <color name="text_color">#E2E0E0</color>
+    <color name="text_color_secondary">#E0DEDE</color>
+    <color name="hint_color">#808080</color>
+    <color name="shadow_color">#000000</color>
+    <color name="edittext_background">#FFFFFF</color>
+    <color name="edittext_stroke">#FFFFFF</color>
+    <color name="primary_green">#7D974D</color>
+</resources>

@@ -5,8 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2A2828"
+    android:background="@color/background_color"
     tools:context=".auth.WelcomeActivity">
+
+    <ImageButton
+        android:id="@+id/themeToggle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_theme_toggle"
+        android:contentDescription="Toggle Theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -23,7 +35,7 @@
         android:layout_width="172dp"
         android:layout_height="48dp"
         android:layout_marginBottom="2dp"
-        android:backgroundTint="#7D974D"
+        android:backgroundTint="@color/primary_green"
         android:text="LOGIN"
         app:layout_constraintBottom_toTopOf="@+id/btRegister"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +46,7 @@
         android:layout_width="171dp"
         android:layout_height="48dp"
         android:layout_marginBottom="40dp"
-        android:backgroundTint="#7C964C"
+        android:backgroundTint="@color/primary_green"
         android:text="REGISTER"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +59,7 @@
         android:layout_height="78dp"
         android:layout_marginTop="24dp"
         android:text="MACRO"
-        android:textColor="#E2E0E0"
+        android:textColor="@color/text_color"
         android:textSize="70sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +73,7 @@
         android:layout_height="77dp"
         android:layout_marginTop="-1dp"
         android:text="MATE"
-        android:textColor="#E0DEDE"
+        android:textColor="@color/text_color_secondary"
         android:textSize="70sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/btLogin"

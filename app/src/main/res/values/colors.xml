@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="welcome_background">#F8FDF8</color>
-    <color name="primary_green">#4CAF50</color>
-    <color name="text_dark">#2E2E2E</color>
-    <color name="text_secondary">#757575</color>
-    <color name="white">#FFFFFF</color>
+    <!-- Light Mode Colors -->
+    <color name="background_color">#F5F5F5</color>
+    <color name="text_color">#2A2828</color>
+    <color name="text_color_secondary">#E2E0E0</color>
+    <color name="hint_color">#666666</color>
+    <color name="shadow_color">#CCCCCC</color>
+    <color name="edittext_background">#FFFFFF</color>
+    <color name="edittext_stroke">#DDDDDD</color>
+    <color name="primary_green">#7D974D</color>
 </resources>
