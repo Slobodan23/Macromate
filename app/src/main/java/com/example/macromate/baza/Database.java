@@ -14,10 +14,19 @@ import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "macroMateDB";
+    private static Database instance;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
+
+    public static synchronized Database getInstance(Context context) {
+        if (instance == null) {
+            instance = new Database(context.getApplicationContext());
+        }
+        return instance;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -72,7 +81,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     // ------------------ KORISNIK ------------------ //
-    public void addKorisnik(String email, String lozinka, String ime, String prezime, int godine, float kilaza, int visina) {
+    public long addKorisnik(String email, String lozinka, String ime, String prezime, int godine, float kilaza, int visina) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -84,7 +93,7 @@ public class Database extends SQLiteOpenHelper {
         cv.put(Korisnik.FIELD_KILAZA, kilaza);
         cv.put(Korisnik.FIELD_VISINA, visina);
 
-        db.insert(Korisnik.TABLE_NAME, null, cv);
+        return db.insert(Korisnik.TABLE_NAME, null, cv);
     }
 
     public void editKorisnik(long id, String email, String lozinka, String ime, String prezime, int godine, float kilaza, int visina) {
@@ -151,6 +160,41 @@ public class Database extends SQLiteOpenHelper {
         }
         result.close();
         return list;
+    }
+    public Korisnik getKorisnikByEmailAndPassword(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ?",
+                Korisnik.TABLE_NAME, Korisnik.FIELD_EMAIL, Korisnik.FIELD_LOZINKA);
+        Cursor result = db.rawQuery(query, new String[]{email, password});
+
+        if (result.moveToFirst()) {
+            Korisnik k = new Korisnik(
+                    result.getLong(result.getColumnIndexOrThrow(Korisnik.FIELD_ID)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_EMAIL)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_LOZINKA)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_IME)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_PREZIME)),
+                    result.getInt(result.getColumnIndexOrThrow(Korisnik.FIELD_GODINE)),
+                    result.getFloat(result.getColumnIndexOrThrow(Korisnik.FIELD_KILAZA)),
+                    result.getInt(result.getColumnIndexOrThrow(Korisnik.FIELD_VISINA))
+            );
+            result.close();
+            return k;
+        }
+        result.close();
+        return null;
+    }
+
+    // Check if email already exists in database
+    public boolean emailExists(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = String.format("SELECT 1 FROM %s WHERE %s = ?",
+                Korisnik.TABLE_NAME, Korisnik.FIELD_EMAIL);
+        Cursor result = db.rawQuery(query, new String[]{email});
+
+        boolean exists = result.moveToFirst();
+        result.close();
+        return exists;
     }
 
     // ------------------ OBROK ------------------ //
