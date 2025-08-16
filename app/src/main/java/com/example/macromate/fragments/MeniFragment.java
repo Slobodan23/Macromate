@@ -1,5 +1,6 @@
 package com.example.macromate.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.macromate.MainActivity;
 import com.example.macromate.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.macromate.editActivity.ProfilActivity;
 
 public class MeniFragment extends Fragment {
 
@@ -45,11 +47,11 @@ public class MeniFragment extends Fragment {
         btnDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Dashboard clicked", Toast.LENGTH_SHORT).show();
-                // TODO: Navigate to dashboard
+                // Navigate to MainActivity (Dashboard)
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
-
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +64,9 @@ public class MeniFragment extends Fragment {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Profile clicked", Toast.LENGTH_SHORT).show();
-                // TODO: Navigate to profile
+                // Navigate to ProfilActivity
+                Intent intent = new Intent(getActivity(), ProfilActivity.class);
+                startActivity(intent);
             }
         });
     }
