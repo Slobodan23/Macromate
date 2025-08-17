@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load saved theme preference before calling super.onCreate()
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNightMode = sharedPreferences.getBoolean("NIGHT_MODE", false);
 
@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void handleRegistration() {
-        // Get input values
+
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String ime = etIme.getText().toString().trim();
@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         String kilazaStr = etKilaza.getText().toString().trim();
         String visinaStr = etVisina.getText().toString().trim();
 
-        // Validate input
+
         if (!validateInput(email, password, ime, prezime, godineStr, kilazaStr, visinaStr)) {
             return;
         }
@@ -91,26 +91,27 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Parse numeric values
+
         try {
             int godine = Integer.parseInt(godineStr);
             float kilaza = Float.parseFloat(kilazaStr);
             int visina = Integer.parseInt(visinaStr);
 
-            // Create new user
+
             long userId = database.addKorisnik(email, password, ime, prezime, godine, kilaza, visina);
 
             if (userId != -1) {
                 Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
 
-                // Save user session (optional)
+
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putLong("USER_ID", userId);
                 editor.putString("USER_EMAIL", email);
+                editor.putBoolean("IS_LOGGED_IN", true);
                 editor.apply();
 
-                // Navigate to MainActivity
+
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -125,26 +126,26 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validateInput(String email, String password, String ime, String prezime,
                                   String godine, String kilaza, String visina) {
-        // Check if any field is empty
+
         if (email.isEmpty() || password.isEmpty() || ime.isEmpty() || prezime.isEmpty() ||
                 godine.isEmpty() || kilaza.isEmpty() || visina.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        // Validate email format
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Please enter a valid email address.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        // Validate password length
+
         if (password.length() < 6) {
             Toast.makeText(this, "Password must be at least 6 characters long.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        // Validate numeric ranges
+
         try {
             int godineInt = Integer.parseInt(godine);
             float kilazaFloat = Float.parseFloat(kilaza);
@@ -183,12 +184,12 @@ public class RegisterActivity extends AppCompatActivity {
                     boolean currentMode = sharedPreferences.getBoolean("NIGHT_MODE", false);
                     boolean newMode = !currentMode;
 
-                    // Save the new theme preference
+
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("NIGHT_MODE", newMode);
                     editor.apply();
 
-                    // Apply the new theme
+
                     AppCompatDelegate.setDefaultNightMode(
                             newMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
                     );

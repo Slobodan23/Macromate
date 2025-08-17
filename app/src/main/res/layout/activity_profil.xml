@@ -8,7 +8,7 @@
     android:background="@color/background_color"
     tools:context=".editActivity.ProfilActivity">
 
-    <!-- Header Fragment - Fixed at top -->
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/headerFragment"
         android:name="com.example.macromate.fragments.HeaderFragment"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout="@layout/fragment_header" />
 
-    <!-- Scrollable content area -->
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -35,18 +35,18 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Profile Title -->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Profile Settings"
                 android:textColor="@color/text_color"
-                android:textSize="24sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="24dp"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp" />
 
-            <!-- Profile Content -->
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,32 +61,148 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="User Information"
+                        android:text="First Name"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etIme"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="textPersonName"
+                        android:padding="12dp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/text_color_secondary"
                         android:layout_marginBottom="16dp" />
 
-                    <!-- Add your profile content here -->
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Profile content will go here..."
-                        android:textColor="@color/text_color_secondary"
-                        android:textSize="16sp" />
+                        android:text="Last Name"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etPrezime"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="textPersonName"
+                        android:padding="12dp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/text_color_secondary"
+                        android:layout_marginBottom="16dp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Age"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etGodine"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/text_color_secondary"
+                        android:layout_marginBottom="16dp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weight (kg)"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etKilaza"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="numberDecimal"
+                        android:padding="12dp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/text_color_secondary"
+                        android:layout_marginBottom="16dp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height (cm)"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etVisina"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="number"
+                        android:padding="12dp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/text_color_secondary"
+                        android:layout_marginBottom="24dp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
+
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/btnOtkazi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Otkaži"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/button_cancel_color"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnSacuvaj"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sačuvaj"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/button_save_color"
+                    android:layout_marginStart="8dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
 
-    <!-- Menu Fragment - Fixed at bottom -->
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/meniFragment"
         android:name="com.example.macromate.fragments.MeniFragment"

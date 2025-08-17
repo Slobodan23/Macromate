@@ -68,36 +68,37 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleLogin() {
-        // Get input values
+
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // Validate input
+
         if (!validateInput(email, password)) {
             return;
         }
 
-        // Try to find user by email and password
+
         Korisnik user = database.getKorisnikByEmailAndPassword(email, password);
 
         if (user != null) {
-            // Login successful
+
             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
 
-            // Save user session
+
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong("USER_ID", user.getId());
             editor.putString("USER_EMAIL", user.getEmail());
+            editor.putBoolean("IS_LOGGED_IN", true);
             editor.apply();
 
-            // Navigate to MainActivity
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
         } else {
-            // Login failed - clear fields and show error
+
             etEmail.setText("");
             etPassword.setText("");
             etEmail.requestFocus();
@@ -106,13 +107,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateInput(String email, String password) {
-        // Check if fields are empty
+
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        // Validate email format
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Please enter a valid email address.", Toast.LENGTH_SHORT).show();
             return false;
