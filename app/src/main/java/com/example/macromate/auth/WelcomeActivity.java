@@ -21,7 +21,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load saved theme preference before calling super.onCreate()
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNightMode = sharedPreferences.getBoolean("NIGHT_MODE", false);
 
@@ -62,12 +61,10 @@ public class WelcomeActivity extends AppCompatActivity {
                     boolean currentMode = sharedPreferences.getBoolean("NIGHT_MODE", false);
                     boolean newMode = !currentMode;
 
-                    // Save the new theme preference
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("NIGHT_MODE", newMode);
                     editor.apply();
 
-                    // Apply the new theme
                     AppCompatDelegate.setDefaultNightMode(
                             newMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
                     );

@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Macromate">
         <activity
+            android:name=".editActivity.CreateObrokActivity"
+            android:exported="false" />
+        <activity
+            android:name=".editActivity.AddObrokActivity"
+            android:exported="false" />
+        <activity
             android:name=".editActivity.ProfilActivity"
             android:exported="false" />
         <activity

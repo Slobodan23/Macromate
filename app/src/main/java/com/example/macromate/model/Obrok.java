@@ -10,9 +10,6 @@ public class Obrok {
     public static final String FIELD_CARB = "carb";
     public static final String FIELD_PROTEIN = "protein";
 
-
-
-
     private Long id;
     private String ime;
     private Float kcal;
@@ -20,12 +17,9 @@ public class Obrok {
     private Float carb;
     private Float protein;
 
-
-    // Default constructor
     public Obrok() {
     }
 
-    // Parameterized constructor
     public Obrok(Long id, String ime, Float kcal, Float fat, Float carb, Float protein) {
         this.id = id;
         this.ime = ime;
@@ -35,7 +29,6 @@ public class Obrok {
         this.protein = protein;
     }
 
-    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

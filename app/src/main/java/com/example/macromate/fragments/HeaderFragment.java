@@ -16,7 +16,6 @@ import com.example.macromate.R;
 public class HeaderFragment extends Fragment {
 
     public HeaderFragment() {
-        // Required empty public constructor
     }
 
     public static HeaderFragment newInstance() {
@@ -44,12 +43,10 @@ public class HeaderFragment extends Fragment {
                     boolean currentMode = sharedPreferences.getBoolean("NIGHT_MODE", false);
                     boolean newMode = !currentMode;
 
-                    // Save the new theme preference
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("NIGHT_MODE", newMode);
                     editor.apply();
 
-                    // Apply the new theme
                     AppCompatDelegate.setDefaultNightMode(
                             newMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
                     );

@@ -12,7 +12,6 @@ public class Korisnik {
     public static final String FIELD_KILAZA = "kilaza";
     public static final String FIELD_VISINA = "visina";
 
-
     private Long id;
     private String email;
     private String lozinka;
@@ -22,12 +21,9 @@ public class Korisnik {
     private Float kilaza;
     private int visina;
 
-
-    // Default constructor
     public Korisnik() {
     }
 
-    // Parameterized constructor
     public Korisnik(Long id, String email, String lozinka, String ime, String prezime,
                     int godine, Float kilaza, int visina) {
         this.id = id;
@@ -40,7 +36,6 @@ public class Korisnik {
         this.visina = visina;
     }
 
-    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -78,5 +73,4 @@ public class Korisnik {
                 ", visina=" + visina +
                 '}';
     }
-
 }

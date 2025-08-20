@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if email already exists
+
         if (database.emailExists(email)) {
             Toast.makeText(this, "Email already exists. Please use a different email.", Toast.LENGTH_SHORT).show();
             return;

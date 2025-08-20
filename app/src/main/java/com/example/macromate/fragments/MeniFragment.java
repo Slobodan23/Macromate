@@ -6,20 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.macromate.MainActivity;
 import com.example.macromate.R;
+import com.example.macromate.editActivity.AddObrokActivity;
 import com.example.macromate.editActivity.ProfilActivity;
 
 public class MeniFragment extends Fragment {
 
-    private LinearLayout btnDashboard, btnProfile, btnAdd;
+    private LinearLayout btnDashboard, btnProfile;
+    private View fabAdd;
 
     public MeniFragment() {
-        // Required empty public constructor
     }
 
     public static MeniFragment newInstance() {
@@ -32,7 +32,7 @@ public class MeniFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meni, container, false);
 
         initializeViews(view);
-        setupMenuClicks();
+        setupMenuClicks(view);
 
         return view;
     }
@@ -40,31 +40,31 @@ public class MeniFragment extends Fragment {
     private void initializeViews(View view) {
         btnDashboard = view.findViewById(R.id.btnDashboard);
         btnProfile = view.findViewById(R.id.btnProfile);
-        btnAdd = view.findViewById(R.id.btnAdd);
+        fabAdd = view.findViewById(R.id.fabAdd);
     }
 
-    private void setupMenuClicks() {
+    private void setupMenuClicks(View view) {
         btnDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to MainActivity (Dashboard)
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Add clicked", Toast.LENGTH_SHORT).show();
-                // TODO: Open add meal dialog
-            }
-        });
+        if (fabAdd != null) {
+            fabAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), AddObrokActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to ProfilActivity
                 Intent intent = new Intent(getActivity(), ProfilActivity.class);
                 startActivity(intent);
             }

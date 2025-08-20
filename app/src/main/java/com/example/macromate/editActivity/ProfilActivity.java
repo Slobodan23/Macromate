@@ -31,14 +31,12 @@ public class ProfilActivity extends AppCompatActivity {
     private Korisnik currentUser;
     private long userId;
 
-
     private String originalIme, originalPrezime;
     private int originalGodine, originalVisina;
     private float originalKilaza;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Apply saved theme before calling super.onCreate()
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNightMode = sharedPreferences.getBoolean("NIGHT_MODE", false);
 
@@ -91,20 +89,17 @@ public class ProfilActivity extends AppCompatActivity {
             return;
         }
 
-
         originalIme = currentUser.getIme();
         originalPrezime = currentUser.getPrezime();
         originalGodine = currentUser.getGodine();
         originalKilaza = currentUser.getKilaza();
         originalVisina = currentUser.getVisina();
 
-
         etIme.setText(originalIme);
         etPrezime.setText(originalPrezime);
         etGodine.setText(String.valueOf(originalGodine));
         etKilaza.setText(String.valueOf(originalKilaza));
         etVisina.setText(String.valueOf(originalVisina));
-
 
         buttonLayout.setVisibility(View.VISIBLE);
         btnSacuvaj.setEnabled(true);
@@ -144,7 +139,6 @@ public class ProfilActivity extends AppCompatActivity {
         etKilaza.setText(String.valueOf(originalKilaza));
         etVisina.setText(String.valueOf(originalVisina));
 
-        // Keep buttons enabled
         btnSacuvaj.setEnabled(true);
         btnOtkazi.setEnabled(true);
     }
@@ -156,7 +150,6 @@ public class ProfilActivity extends AppCompatActivity {
         String kilazaStr = etKilaza.getText().toString().trim();
         String visinaStr = etVisina.getText().toString().trim();
 
-        // Validate input
         if (!validateInput(ime, prezime, godineStr, kilazaStr, visinaStr)) {
             return;
         }
@@ -166,18 +159,15 @@ public class ProfilActivity extends AppCompatActivity {
             float kilaza = Float.parseFloat(kilazaStr);
             int visina = Integer.parseInt(visinaStr);
 
-            // Update user in database (keeping email and password unchanged)
             database.editKorisnik(userId, currentUser.getEmail(), currentUser.getLozinka(),
                     ime, prezime, godine, kilaza, visina);
 
-            // Update original values
             originalIme = ime;
             originalPrezime = prezime;
             originalGodine = godine;
             originalKilaza = kilaza;
             originalVisina = visina;
 
-            // Update current user object
             currentUser.setIme(ime);
             currentUser.setPrezime(prezime);
             currentUser.setGodine(godine);

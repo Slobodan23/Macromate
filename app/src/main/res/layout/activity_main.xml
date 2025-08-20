@@ -41,7 +41,16 @@
                 android:name="com.example.macromate.fragments.MacrosFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 tools:layout="@layout/fragment_macros" />
+
+            <!-- Obroci Fragment -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/obrociFragment"
+                android:name="com.example.macromate.fragments.ObrociFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_obroci" />
 
         </LinearLayout>
 

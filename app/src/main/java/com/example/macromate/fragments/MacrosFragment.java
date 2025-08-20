@@ -7,22 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.macromate.R;
+import com.example.macromate.model.Obrok;
+import java.util.List;
 
 public class MacrosFragment extends Fragment {
 
     private ProgressBar caloriesProgress, carbsProgress, fatsProgress, proteinProgress;
     private TextView caloriesText, carbsText, fatsText, proteinText;
+    private ObrociFragment obrociFragment;
 
-    // Daily goals (you can make these configurable later)
     private final int CALORIES_GOAL = 2500;
     private final int CARBS_GOAL = 250;
     private final int FATS_GOAL = 65;
     private final int PROTEIN_GOAL = 150;
 
     public MacrosFragment() {
-        // Required empty public constructor
+
     }
 
     public static MacrosFragment newInstance() {
@@ -30,12 +31,10 @@ public class MacrosFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_macros, container, false);
 
         initializeViews(view);
-        updateMacroProgress();
 
         return view;
     }
@@ -51,21 +50,31 @@ public class MacrosFragment extends Fragment {
         fatsText = view.findViewById(R.id.fatsText);
         proteinText = view.findViewById(R.id.proteinText);
 
-        // Set max values for progress bars
         caloriesProgress.setMax(100);
         carbsProgress.setMax(100);
         fatsProgress.setMax(100);
         proteinProgress.setMax(100);
+
+
+        updateMacroProgressSafe();
     }
 
-    private void updateMacroProgress() {
-        // TODO: Calculate actual values from Obroks list for today
+    public void setObrociFragment(ObrociFragment obrociFragment) {
+        this.obrociFragment = obrociFragment;
+
+        updateMacroProgressSafe();
+    }
+
+    private void updateMacroProgressSafe() {
+
+        if (caloriesProgress == null) return;
+
         int currentCalories = calculateDailyCalories();
         int currentCarbs = calculateDailyCarbs();
         int currentFats = calculateDailyFats();
         int currentProtein = calculateDailyProtein();
 
-        // Update progress bars (0-100%)
+
         int caloriesPercent = Math.min(100, (currentCalories * 100) / CALORIES_GOAL);
         int carbsPercent = Math.min(100, (currentCarbs * 100) / CARBS_GOAL);
         int fatsPercent = Math.min(100, (currentFats * 100) / FATS_GOAL);
@@ -76,36 +85,57 @@ public class MacrosFragment extends Fragment {
         fatsProgress.setProgress(fatsPercent);
         proteinProgress.setProgress(proteinPercent);
 
-        // Update text displays
         caloriesText.setText(currentCalories + " / " + CALORIES_GOAL);
         carbsText.setText(currentCarbs + " / " + CARBS_GOAL);
         fatsText.setText(currentFats + " / " + FATS_GOAL);
         proteinText.setText(currentProtein + " / " + PROTEIN_GOAL);
     }
 
-    // TODO: Implement these methods to calculate from your Obroks data
     private int calculateDailyCalories() {
-        // Sum up calories from all Obroks for today
-        return 0; // Placeholder
+        if (obrociFragment == null) return 0;
+        List<Obrok> obroci = obrociFragment.getAllTodaysObroci();
+        if (obroci == null) return 0;
+        float total = 0;
+        for (Obrok obrok : obroci) {
+            total += obrok.getKcal();
+        }
+        return Math.round(total);
     }
 
     private int calculateDailyCarbs() {
-        // Sum up carbohydrates from all Obroks for today
-        return 0; // Placeholder
+        if (obrociFragment == null) return 0;
+        List<Obrok> obroci = obrociFragment.getAllTodaysObroci();
+        if (obroci == null) return 0;
+        float total = 0;
+        for (Obrok obrok : obroci) {
+            total += obrok.getCarb();
+        }
+        return Math.round(total);
     }
 
     private int calculateDailyFats() {
-        // Sum up fats from all Obroks for today
-        return 0; // Placeholder
+        if (obrociFragment == null) return 0;
+        List<Obrok> obroci = obrociFragment.getAllTodaysObroci();
+        if (obroci == null) return 0;
+        float total = 0;
+        for (Obrok obrok : obroci) {
+            total += obrok.getFat();
+        }
+        return Math.round(total);
     }
 
     private int calculateDailyProtein() {
-        // Sum up protein from all Obroks for today
-        return 0; // Placeholder
+        if (obrociFragment == null) return 0;
+        List<Obrok> obroci = obrociFragment.getAllTodaysObroci();
+        if (obroci == null) return 0;
+        float total = 0;
+        for (Obrok obrok : obroci) {
+            total += obrok.getProtein();
+        }
+        return Math.round(total);
     }
 
-    // Call this method when Obroks data changes
     public void refreshMacros() {
-        updateMacroProgress();
+        updateMacroProgressSafe();
     }
 }
