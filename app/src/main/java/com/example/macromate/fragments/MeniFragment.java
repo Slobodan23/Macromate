@@ -57,6 +57,16 @@ public class MeniFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), AddObrokActivity.class);
+
+                    if (getActivity() instanceof MainActivity) {
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        DatePickerFragment datePickerFragment = (DatePickerFragment)
+                                mainActivity.getSupportFragmentManager().findFragmentById(R.id.datePickerFragment);
+                        if (datePickerFragment != null) {
+                            intent.putExtra("SELECTED_DATE", datePickerFragment.getSelectedDate().getTime());
+                        }
+                    }
+
                     startActivity(intent);
                 }
             });

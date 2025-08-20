@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/previousDayButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_media_previous"
+            android:contentDescription="Previous day"
+            android:layout_marginEnd="16dp"
+            app:tint="@color/text_color" />
+
+        <TextView
+            android:id="@+id/currentDateText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Danas - Utorak, 20 Avgust 2025"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp" />
+
+        <ImageButton
+            android:id="@+id/nextDayButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_media_next"
+            android:contentDescription="Next day"
+            android:layout_marginStart="16dp"
+            app:tint="@color/text_color" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -24,9 +24,10 @@ public class ObrociFragment extends Fragment {
     private TextView emptyDorucakText, emptyRucakText, emptyVeceraText, emptyUzinaText;
     private Database database;
     private MacrosFragment macrosFragment;
+    private Date selectedDate;
 
     public ObrociFragment() {
-
+        selectedDate = new Date();
     }
 
     public static ObrociFragment newInstance() {
@@ -68,6 +69,11 @@ public class ObrociFragment extends Fragment {
         veceraAdapter = new ObrokAdapter(new ArrayList<>());
         uzinaAdapter = new ObrokAdapter(new ArrayList<>());
 
+        dorucakAdapter.setOnObrokDeleteListener((obrok, position) -> deleteObrokFromMeal(obrok, "Breakfast", dorucakAdapter, position));
+        rucakAdapter.setOnObrokDeleteListener((obrok, position) -> deleteObrokFromMeal(obrok, "Lunch", rucakAdapter, position));
+        veceraAdapter.setOnObrokDeleteListener((obrok, position) -> deleteObrokFromMeal(obrok, "Dinner", veceraAdapter, position));
+        uzinaAdapter.setOnObrokDeleteListener((obrok, position) -> deleteObrokFromMeal(obrok, "Snacks", uzinaAdapter, position));
+
         dorucakRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dorucakRecyclerView.setAdapter(dorucakAdapter);
 
@@ -81,13 +87,22 @@ public class ObrociFragment extends Fragment {
         uzinaRecyclerView.setAdapter(uzinaAdapter);
     }
 
+    public void setSelectedDate(Date date) {
+        this.selectedDate = date;
+        android.util.Log.d("ObrociFragment", "Selected date set to: " + date);
+    }
+
+    public Date getSelectedDate() {
+        return selectedDate;
+    }
+
     private void loadTodaysObroci() {
         if (database == null) return;
 
-        Date today = new Date();
-        ObrociDan obrociDan = database.getObrociDanByDate(today);
+        Date dateToLoad = selectedDate != null ? selectedDate : new Date();
+        ObrociDan obrociDan = database.getObrociDanByDate(dateToLoad);
 
-        android.util.Log.d("ObrociFragment", "Loading today's meals for date: " + today);
+        android.util.Log.d("ObrociFragment", "Loading meals for date: " + dateToLoad);
 
         if (obrociDan != null) {
             android.util.Log.d("ObrociFragment", "Found ObrociDan with ID: " + obrociDan.getId());
@@ -109,7 +124,7 @@ public class ObrociFragment extends Fragment {
 
             updateEmptyTextVisibility(dorucak, rucak, vecera, uzina);
         } else {
-            android.util.Log.d("ObrociFragment", "No ObrociDan found for today");
+            android.util.Log.d("ObrociFragment", "No ObrociDan found for date: " + dateToLoad);
             dorucakAdapter.updateData(new ArrayList<>());
             rucakAdapter.updateData(new ArrayList<>());
             veceraAdapter.updateData(new ArrayList<>());
@@ -141,8 +156,8 @@ public class ObrociFragment extends Fragment {
     public List<Obrok> getAllTodaysObroci() {
         if (database == null) return new ArrayList<>();
 
-        Date today = new Date();
-        ObrociDan obrociDan = database.getObrociDanByDate(today);
+        Date dateToLoad = selectedDate != null ? selectedDate : new Date();
+        ObrociDan obrociDan = database.getObrociDanByDate(dateToLoad);
         List<Obrok> allObroci = new ArrayList<>();
 
         if (obrociDan != null) {
@@ -163,5 +178,47 @@ public class ObrociFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadTodaysObroci();
+    }
+
+    private void deleteObrokFromMeal(Obrok obrok, String category, ObrokAdapter adapter, int position) {
+        if (database == null) return;
+
+        Date dateToUpdate = selectedDate != null ? selectedDate : new Date();
+        ObrociDan obrociDan = database.getObrociDanByDate(dateToUpdate);
+
+        if (obrociDan == null) return;
+
+        List<Obrok> dorucak = obrociDan.getDorucak() != null ? new ArrayList<>(obrociDan.getDorucak()) : new ArrayList<>();
+        List<Obrok> rucak = obrociDan.getRucak() != null ? new ArrayList<>(obrociDan.getRucak()) : new ArrayList<>();
+        List<Obrok> vecera = obrociDan.getVecera() != null ? new ArrayList<>(obrociDan.getVecera()) : new ArrayList<>();
+        List<Obrok> uzina = obrociDan.getUzina() != null ? new ArrayList<>(obrociDan.getUzina()) : new ArrayList<>();
+
+        boolean removed = false;
+        switch (category) {
+            case "Breakfast":
+                removed = dorucak.removeIf(o -> o.getId().equals(obrok.getId()));
+                break;
+            case "Lunch":
+                removed = rucak.removeIf(o -> o.getId().equals(obrok.getId()));
+                break;
+            case "Dinner":
+                removed = vecera.removeIf(o -> o.getId().equals(obrok.getId()));
+                break;
+            case "Snacks":
+                removed = uzina.removeIf(o -> o.getId().equals(obrok.getId()));
+                break;
+        }
+
+        if (removed) {
+            database.editObrociDan(obrociDan.getId(), dorucak, rucak, vecera, uzina, dateToUpdate);
+
+            adapter.removeItem(position);
+
+            updateEmptyTextVisibility(dorucak, rucak, vecera, uzina);
+
+            updateMacrosFragment();
+
+            android.util.Log.d("ObrociFragment", "Deleted meal: " + obrok.getIme() + " from " + category + " for date: " + dateToUpdate);
+        }
     }
 }

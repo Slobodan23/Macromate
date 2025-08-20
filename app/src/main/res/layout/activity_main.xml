@@ -35,6 +35,15 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Date Picker Fragment -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/datePickerFragment"
+                android:name="com.example.macromate.fragments.DatePickerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                tools:layout="@layout/fragment_date_picker" />
+
             <!-- Macros Fragment -->
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/macrosFragment"

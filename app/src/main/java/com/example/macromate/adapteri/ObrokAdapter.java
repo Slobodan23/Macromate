@@ -3,6 +3,7 @@ package com.example.macromate.adapteri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,9 +13,18 @@ import java.util.List;
 
 public class ObrokAdapter extends RecyclerView.Adapter<ObrokAdapter.ObrokViewHolder> {
     private List<Obrok> obroci;
+    private OnObrokDeleteListener deleteListener;
+
+    public interface OnObrokDeleteListener {
+        void onObrokDelete(Obrok obrok, int position);
+    }
 
     public ObrokAdapter(List<Obrok> obroci) {
         this.obroci = obroci;
+    }
+
+    public void setOnObrokDeleteListener(OnObrokDeleteListener listener) {
+        this.deleteListener = listener;
     }
 
     @NonNull
@@ -27,7 +37,7 @@ public class ObrokAdapter extends RecyclerView.Adapter<ObrokAdapter.ObrokViewHol
     @Override
     public void onBindViewHolder(@NonNull ObrokViewHolder holder, int position) {
         Obrok obrok = obroci.get(position);
-        holder.bind(obrok);
+        holder.bind(obrok, position, deleteListener);
     }
 
     @Override
@@ -45,8 +55,17 @@ public class ObrokAdapter extends RecyclerView.Adapter<ObrokAdapter.ObrokViewHol
         android.util.Log.d("ObrokAdapter", "notifyDataSetChanged() called, adapter now has " + getItemCount() + " items");
     }
 
+    public void removeItem(int position) {
+        if (position >= 0 && position < obroci.size()) {
+            obroci.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, obroci.size());
+        }
+    }
+
     static class ObrokViewHolder extends RecyclerView.ViewHolder {
         private TextView obrokName, obrokKcal, obrokCarbs, obrokFats, obrokProtein;
+        private ImageButton deleteButton;
 
         public ObrokViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,14 +74,21 @@ public class ObrokAdapter extends RecyclerView.Adapter<ObrokAdapter.ObrokViewHol
             obrokCarbs = itemView.findViewById(R.id.obrokCarbs);
             obrokFats = itemView.findViewById(R.id.obrokFats);
             obrokProtein = itemView.findViewById(R.id.obrokProtein);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
 
-        public void bind(Obrok obrok) {
+        public void bind(Obrok obrok, int position, OnObrokDeleteListener deleteListener) {
             obrokName.setText(obrok.getIme());
             obrokKcal.setText(String.format("%.0f kcal", obrok.getKcal()));
             obrokCarbs.setText(String.format("C: %.1fg", obrok.getCarb()));
             obrokFats.setText(String.format("F: %.1fg", obrok.getFat()));
             obrokProtein.setText(String.format("P: %.1fg", obrok.getProtein()));
+
+            deleteButton.setOnClickListener(v -> {
+                if (deleteListener != null) {
+                    deleteListener.onObrokDelete(obrok, position);
+                }
+            });
         }
     }
 }

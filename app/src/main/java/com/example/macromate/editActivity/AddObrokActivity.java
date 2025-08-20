@@ -208,8 +208,14 @@ public class AddObrokActivity extends AppCompatActivity {
         long obrokId = database.addObrok(obrok.getIme(), obrok.getKcal(), obrok.getFat(), obrok.getCarb(), obrok.getProtein());
         obrok.setId(obrokId);
 
-        Date today = new Date();
-        ObrociDan obrociDan = database.getObrociDanByDate(today);
+        Date targetDate = new Date();
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("SELECTED_DATE")) {
+            long dateMillis = intent.getLongExtra("SELECTED_DATE", System.currentTimeMillis());
+            targetDate = new Date(dateMillis);
+        }
+
+        ObrociDan obrociDan = database.getObrociDanByDate(targetDate);
 
         if (obrociDan == null) {
             List<Obrok> dorucak = new ArrayList<>();
@@ -232,7 +238,7 @@ public class AddObrokActivity extends AppCompatActivity {
                     break;
             }
 
-            database.addObrociDan(dorucak, rucak, vecera, uzina, today);
+            database.addObrociDan(dorucak, rucak, vecera, uzina, targetDate);
         } else {
             List<Obrok> dorucak = obrociDan.getDorucak() != null ? new ArrayList<>(obrociDan.getDorucak()) : new ArrayList<>();
             List<Obrok> rucak = obrociDan.getRucak() != null ? new ArrayList<>(obrociDan.getRucak()) : new ArrayList<>();
@@ -254,7 +260,7 @@ public class AddObrokActivity extends AppCompatActivity {
                     break;
             }
 
-            database.editObrociDan(obrociDan.getId(), dorucak, rucak, vecera, uzina, today);
+            database.editObrociDan(obrociDan.getId(), dorucak, rucak, vecera, uzina, targetDate);
         }
     }
 
