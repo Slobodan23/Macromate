@@ -165,6 +165,20 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Edit Macros Button -->
+            <Button
+                android:id="@+id/btnEditMacros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Macro Targets"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/primary_green"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"
+                android:drawableStart="@android:drawable/ic_menu_edit"
+                android:drawablePadding="8dp"
+                android:padding="12dp" />
 
             <LinearLayout
                 android:id="@+id/buttonLayout"
@@ -179,7 +193,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Otkaži"
+                    android:text="Cancel"
                     android:textColor="@android:color/white"
                     android:backgroundTint="@color/button_cancel_color"
                     android:layout_marginEnd="8dp"
@@ -190,7 +204,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sačuvaj"
+                    android:text="Save"
                     android:textColor="@android:color/white"
                     android:backgroundTint="@color/button_save_color"
                     android:layout_marginStart="8dp"

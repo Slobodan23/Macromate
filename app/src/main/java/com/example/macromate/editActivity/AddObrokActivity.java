@@ -122,7 +122,17 @@ public class AddObrokActivity extends AppCompatActivity {
     }
 
     private void loadMeals() {
-        availableMeals = database.getAllObroci();
+        List<Obrok> allObroci = database.getAllObroci();
+        availableMeals = new ArrayList<>();
+
+
+        for (Obrok obrok : allObroci) {
+            String mealName = obrok.getIme();
+
+            if (!mealName.matches(".*\\(\\d+(\\.\\d+)?g\\).*")) {
+                availableMeals.add(obrok);
+            }
+        }
 
         List<String> mealNames = new ArrayList<>();
         mealNames.add("Select a meal...");

@@ -1,6 +1,8 @@
 package com.example.macromate.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.macromate.R;
+import com.example.macromate.baza.Database;
+import com.example.macromate.model.Korisnik;
 import com.example.macromate.model.Obrok;
 import java.util.List;
 
@@ -16,11 +20,14 @@ public class MacrosFragment extends Fragment {
     private ProgressBar caloriesProgress, carbsProgress, fatsProgress, proteinProgress;
     private TextView caloriesText, carbsText, fatsText, proteinText;
     private ObrociFragment obrociFragment;
+    private Database database;
+    private Korisnik currentUser;
 
-    private final int CALORIES_GOAL = 2500;
-    private final int CARBS_GOAL = 250;
-    private final int FATS_GOAL = 65;
-    private final int PROTEIN_GOAL = 150;
+
+    private int caloriesGoal = 2000;
+    private int carbsGoal = 250;
+    private int fatsGoal = 65;
+    private int proteinGoal = 150;
 
     public MacrosFragment() {
 
@@ -55,7 +62,36 @@ public class MacrosFragment extends Fragment {
         fatsProgress.setMax(100);
         proteinProgress.setMax(100);
 
+        database = Database.getInstance(getContext());
+        loadUserData();
+        updateMacroProgressSafe();
+    }
 
+    private void loadUserData() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        long userId = prefs.getLong("USER_ID", -1);
+        if (userId != -1) {
+            currentUser = database.getKorisnikById(userId);
+            if (currentUser != null) {
+
+                Float caloriesTarget = currentUser.getCaloriesTarget();
+                Float carbsTarget = currentUser.getCarbsTarget();
+                Float fatTarget = currentUser.getFatTarget();
+                Float proteinTarget = currentUser.getProteinTarget();
+
+                caloriesGoal = (caloriesTarget != null) ? Math.round(caloriesTarget) : 2000;
+                carbsGoal = (carbsTarget != null) ? Math.round(carbsTarget) : 250;
+                fatsGoal = (fatTarget != null) ? Math.round(fatTarget) : 65;
+                proteinGoal = (proteinTarget != null) ? Math.round(proteinTarget) : 150;
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        loadUserData();
         updateMacroProgressSafe();
     }
 
@@ -75,20 +111,20 @@ public class MacrosFragment extends Fragment {
         int currentProtein = calculateDailyProtein();
 
 
-        int caloriesPercent = Math.min(100, (currentCalories * 100) / CALORIES_GOAL);
-        int carbsPercent = Math.min(100, (currentCarbs * 100) / CARBS_GOAL);
-        int fatsPercent = Math.min(100, (currentFats * 100) / FATS_GOAL);
-        int proteinPercent = Math.min(100, (currentProtein * 100) / PROTEIN_GOAL);
+        int caloriesPercent = Math.min(100, (currentCalories * 100) / caloriesGoal);
+        int carbsPercent = Math.min(100, (currentCarbs * 100) / carbsGoal);
+        int fatsPercent = Math.min(100, (currentFats * 100) / fatsGoal);
+        int proteinPercent = Math.min(100, (currentProtein * 100) / proteinGoal);
 
         caloriesProgress.setProgress(caloriesPercent);
         carbsProgress.setProgress(carbsPercent);
         fatsProgress.setProgress(fatsPercent);
         proteinProgress.setProgress(proteinPercent);
 
-        caloriesText.setText(currentCalories + " / " + CALORIES_GOAL);
-        carbsText.setText(currentCarbs + " / " + CARBS_GOAL);
-        fatsText.setText(currentFats + " / " + FATS_GOAL);
-        proteinText.setText(currentProtein + " / " + PROTEIN_GOAL);
+        caloriesText.setText(currentCalories + " / " + caloriesGoal);
+        carbsText.setText(currentCarbs + " / " + carbsGoal);
+        fatsText.setText(currentFats + " / " + fatsGoal);
+        proteinText.setText(currentProtein + " / " + proteinGoal);
     }
 
     private int calculateDailyCalories() {
@@ -136,6 +172,12 @@ public class MacrosFragment extends Fragment {
     }
 
     public void refreshMacros() {
+        updateMacroProgressSafe();
+    }
+
+    public void refreshMacroTargets() {
+
+        loadUserData();
         updateMacroProgressSafe();
     }
 }

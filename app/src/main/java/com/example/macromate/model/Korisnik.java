@@ -11,6 +11,10 @@ public class Korisnik {
     public static final String FIELD_GODINE = "godine";
     public static final String FIELD_KILAZA = "kilaza";
     public static final String FIELD_VISINA = "visina";
+    public static final String FIELD_CALORIES_TARGET = "calories_target";
+    public static final String FIELD_PROTEIN_TARGET = "protein_target";
+    public static final String FIELD_CARBS_TARGET = "carbs_target";
+    public static final String FIELD_FAT_TARGET = "fat_target";
 
     private Long id;
     private String email;
@@ -20,9 +24,19 @@ public class Korisnik {
     private int godine;
     private Float kilaza;
     private int visina;
+    private Float caloriesTarget;
+    private Float proteinTarget;
+    private Float carbsTarget;
+    private Float fatTarget;
 
     public Korisnik() {
+
+        this.caloriesTarget = 2000.0f;
+        this.proteinTarget = 150.0f;
+        this.carbsTarget = 250.0f;
+        this.fatTarget = 65.0f;
     }
+
 
     public Korisnik(Long id, String email, String lozinka, String ime, String prezime,
                     int godine, Float kilaza, int visina) {
@@ -34,6 +48,29 @@ public class Korisnik {
         this.godine = godine;
         this.kilaza = kilaza;
         this.visina = visina;
+
+        this.caloriesTarget = 2000.0f;
+        this.proteinTarget = 150.0f;
+        this.carbsTarget = 250.0f;
+        this.fatTarget = 65.0f;
+    }
+
+
+    public Korisnik(Long id, String email, String lozinka, String ime, String prezime,
+                    int godine, Float kilaza, int visina, Float caloriesTarget,
+                    Float proteinTarget, Float carbsTarget, Float fatTarget) {
+        this.id = id;
+        this.email = email;
+        this.lozinka = lozinka;
+        this.ime = ime;
+        this.prezime = prezime;
+        this.godine = godine;
+        this.kilaza = kilaza;
+        this.visina = visina;
+        this.caloriesTarget = caloriesTarget;
+        this.proteinTarget = proteinTarget;
+        this.carbsTarget = carbsTarget;
+        this.fatTarget = fatTarget;
     }
 
     public Long getId() { return id; }
@@ -60,6 +97,18 @@ public class Korisnik {
     public int getVisina() { return visina; }
     public void setVisina(int visina) { this.visina = visina; }
 
+    public Float getCaloriesTarget() { return caloriesTarget; }
+    public void setCaloriesTarget(Float caloriesTarget) { this.caloriesTarget = caloriesTarget; }
+
+    public Float getProteinTarget() { return proteinTarget; }
+    public void setProteinTarget(Float proteinTarget) { this.proteinTarget = proteinTarget; }
+
+    public Float getCarbsTarget() { return carbsTarget; }
+    public void setCarbsTarget(Float carbsTarget) { this.carbsTarget = carbsTarget; }
+
+    public Float getFatTarget() { return fatTarget; }
+    public void setFatTarget(Float fatTarget) { this.fatTarget = fatTarget; }
+
     @Override
     public String toString() {
         return "Korisnik{" +
@@ -71,6 +120,10 @@ public class Korisnik {
                 ", godine=" + godine +
                 ", kilaza=" + kilaza +
                 ", visina=" + visina +
+                ", caloriesTarget=" + caloriesTarget +
+                ", proteinTarget=" + proteinTarget +
+                ", carbsTarget=" + carbsTarget +
+                ", fatTarget=" + fatTarget +
                 '}';
     }
 }

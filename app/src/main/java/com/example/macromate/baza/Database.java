@@ -23,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public Database(Context context) {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
     }
 
     public static synchronized Database getInstance(Context context) {
@@ -44,7 +44,11 @@ public class Database extends SQLiteOpenHelper {
                         "%s TEXT, " +
                         "%s INTEGER, " +
                         "%s REAL, " +
-                        "%s INTEGER);",
+                        "%s INTEGER, " +
+                        "%s REAL, " +
+                        "%s REAL, " +
+                        "%s REAL, " +
+                        "%s REAL);",
                 Korisnik.TABLE_NAME,
                 Korisnik.FIELD_ID,
                 Korisnik.FIELD_EMAIL,
@@ -53,7 +57,11 @@ public class Database extends SQLiteOpenHelper {
                 Korisnik.FIELD_PREZIME,
                 Korisnik.FIELD_GODINE,
                 Korisnik.FIELD_KILAZA,
-                Korisnik.FIELD_VISINA
+                Korisnik.FIELD_VISINA,
+                Korisnik.FIELD_CALORIES_TARGET,
+                Korisnik.FIELD_PROTEIN_TARGET,
+                Korisnik.FIELD_CARBS_TARGET,
+                Korisnik.FIELD_FAT_TARGET
         );
         db.execSQL(SQL_KORISNIK);
 
@@ -132,6 +140,27 @@ public class Database extends SQLiteOpenHelper {
         db.update(Korisnik.TABLE_NAME, cv, Korisnik.FIELD_ID + "=?", new String[]{String.valueOf(id)});
     }
 
+    public void editKorisnikWithMacros(long id, String email, String lozinka, String ime, String prezime,
+                                       int godine, float kilaza, int visina, float caloriesTarget,
+                                       float proteinTarget, float carbsTarget, float fatTarget) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(Korisnik.FIELD_EMAIL, email);
+        cv.put(Korisnik.FIELD_LOZINKA, lozinka);
+        cv.put(Korisnik.FIELD_IME, ime);
+        cv.put(Korisnik.FIELD_PREZIME, prezime);
+        cv.put(Korisnik.FIELD_GODINE, godine);
+        cv.put(Korisnik.FIELD_KILAZA, kilaza);
+        cv.put(Korisnik.FIELD_VISINA, visina);
+        cv.put(Korisnik.FIELD_CALORIES_TARGET, caloriesTarget);
+        cv.put(Korisnik.FIELD_PROTEIN_TARGET, proteinTarget);
+        cv.put(Korisnik.FIELD_CARBS_TARGET, carbsTarget);
+        cv.put(Korisnik.FIELD_FAT_TARGET, fatTarget);
+
+        db.update(Korisnik.TABLE_NAME, cv, Korisnik.FIELD_ID + "=?", new String[]{String.valueOf(id)});
+    }
+
     public int deleteKorisnik(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(Korisnik.TABLE_NAME, Korisnik.FIELD_ID + "=?", new String[]{String.valueOf(id)});
@@ -153,6 +182,30 @@ public class Database extends SQLiteOpenHelper {
                     result.getFloat(result.getColumnIndexOrThrow(Korisnik.FIELD_KILAZA)),
                     result.getInt(result.getColumnIndexOrThrow(Korisnik.FIELD_VISINA))
             );
+
+
+            try {
+                int caloriesIndex = result.getColumnIndex(Korisnik.FIELD_CALORIES_TARGET);
+                int proteinIndex = result.getColumnIndex(Korisnik.FIELD_PROTEIN_TARGET);
+                int carbsIndex = result.getColumnIndex(Korisnik.FIELD_CARBS_TARGET);
+                int fatIndex = result.getColumnIndex(Korisnik.FIELD_FAT_TARGET);
+
+                if (caloriesIndex != -1 && proteinIndex != -1 && carbsIndex != -1 && fatIndex != -1) {
+                    Float calories = result.isNull(caloriesIndex) ? null : result.getFloat(caloriesIndex);
+                    Float protein = result.isNull(proteinIndex) ? null : result.getFloat(proteinIndex);
+                    Float carbs = result.isNull(carbsIndex) ? null : result.getFloat(carbsIndex);
+                    Float fat = result.isNull(fatIndex) ? null : result.getFloat(fatIndex);
+
+                    if (calories != null) k.setCaloriesTarget(calories);
+                    if (protein != null) k.setProteinTarget(protein);
+                    if (carbs != null) k.setCarbsTarget(carbs);
+                    if (fat != null) k.setFatTarget(fat);
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+
             result.close();
             return k;
         }

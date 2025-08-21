@@ -1,5 +1,6 @@
 package com.example.macromate.editActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,7 +26,7 @@ import com.example.macromate.model.Korisnik;
 public class ProfilActivity extends AppCompatActivity {
 
     private EditText etIme, etPrezime, etGodine, etKilaza, etVisina;
-    private Button btnSacuvaj, btnOtkazi;
+    private Button btnSacuvaj, btnOtkazi, btnEditMacros;
     private LinearLayout buttonLayout;
     private Database database;
     private Korisnik currentUser;
@@ -67,6 +68,7 @@ public class ProfilActivity extends AppCompatActivity {
         etVisina = findViewById(R.id.etVisina);
         btnSacuvaj = findViewById(R.id.btnSacuvaj);
         btnOtkazi = findViewById(R.id.btnOtkazi);
+        btnEditMacros = findViewById(R.id.btnEditMacros);
         buttonLayout = findViewById(R.id.buttonLayout);
 
         database = Database.getInstance(this);
@@ -130,6 +132,12 @@ public class ProfilActivity extends AppCompatActivity {
     private void setupButtons() {
         btnOtkazi.setOnClickListener(v -> resetFields());
         btnSacuvaj.setOnClickListener(v -> saveChanges());
+        btnEditMacros.setOnClickListener(v -> openEditMacrosActivity());
+    }
+
+    private void openEditMacrosActivity() {
+        Intent intent = new Intent(this, EditMacrosActivity.class);
+        startActivity(intent);
     }
 
     private void resetFields() {
