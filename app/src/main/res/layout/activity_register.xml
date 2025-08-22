@@ -9,6 +9,18 @@
     tools:context=".auth.RegisterActivity">
 
     <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
         android:id="@+id/themeToggle"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -114,7 +126,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Ime"
+                android:hint="First Name"
                 android:inputType="textPersonName"
                 android:padding="12dp"
                 android:textColor="@color/text_color"
@@ -129,7 +141,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Prezime"
+                android:hint="Last Name"
                 android:inputType="textPersonName"
                 android:padding="12dp"
                 android:textColor="@color/text_color"
@@ -144,7 +156,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Godine"
+                android:hint="Age"
                 android:inputType="number"
                 android:padding="12dp"
                 android:textColor="@color/text_color"
@@ -159,7 +171,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Kilaza (kg)"
+                android:hint="Weight (kg)"
                 android:inputType="numberDecimal"
                 android:padding="12dp"
                 android:textColor="@color/text_color"
@@ -174,7 +186,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Visina (cm)"
+                android:hint="Height (cm)"
                 android:inputType="number"
                 android:padding="12dp"
                 android:textColor="@color/text_color"

@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         initializeViews();
         logAllUsers();
         setupThemeToggle();
+        setupBackButton();
         setupLoginButton();
     }
 
@@ -144,6 +145,12 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
+
+    private void setupBackButton() {
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> onBackPressed());
+    }
+
     private void logAllUsers() {
         List<Korisnik> allUsers = database.getAllKorisnici();
 

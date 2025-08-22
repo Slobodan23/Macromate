@@ -48,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         initializeViews();
         setupThemeToggle();
+        setupBackButton();
         setupRegisterButton();
     }
 
@@ -196,5 +197,10 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void setupBackButton() {
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 }

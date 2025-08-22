@@ -80,7 +80,7 @@ public class DatePickerFragment extends Fragment {
 
         Calendar today = Calendar.getInstance();
         if (isSameDay(selectedCalendar, today)) {
-            currentDateText.setText("Danas - " + formattedDate);
+            currentDateText.setText("Today - " + formattedDate);
         } else {
             currentDateText.setText(formattedDate);
         }
