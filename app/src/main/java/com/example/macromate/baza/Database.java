@@ -260,6 +260,30 @@ public class Database extends SQLiteOpenHelper {
         return null;
     }
 
+    public Korisnik getKorisnikByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = String.format("SELECT * FROM %s WHERE %s = ?",
+                Korisnik.TABLE_NAME, Korisnik.FIELD_EMAIL);
+        Cursor result = db.rawQuery(query, new String[]{email});
+
+        if (result.moveToFirst()) {
+            Korisnik k = new Korisnik(
+                    result.getLong(result.getColumnIndexOrThrow(Korisnik.FIELD_ID)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_EMAIL)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_LOZINKA)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_IME)),
+                    result.getString(result.getColumnIndexOrThrow(Korisnik.FIELD_PREZIME)),
+                    result.getInt(result.getColumnIndexOrThrow(Korisnik.FIELD_GODINE)),
+                    result.getFloat(result.getColumnIndexOrThrow(Korisnik.FIELD_KILAZA)),
+                    result.getInt(result.getColumnIndexOrThrow(Korisnik.FIELD_VISINA))
+            );
+            result.close();
+            return k;
+        }
+        result.close();
+        return null;
+    }
+
     public boolean emailExists(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = String.format("SELECT 1 FROM %s WHERE %s = ?",

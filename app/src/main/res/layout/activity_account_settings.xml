@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context=".editActivity.ProfilActivity">
-
+    tools:context=".editActivity.AccountSettingsActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/headerFragment"
@@ -18,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout="@layout/fragment_header" />
-
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -35,17 +33,15 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Profile Settings"
+                android:text="Account Settings"
                 android:textColor="@color/text_color"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:layout_marginBottom="24dp" />
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -61,138 +57,89 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="First Name"
+                        android:text="Current Password"
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/etIme"
+                        android:id="@+id/etCurrentPassword"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/input_background"
-                        android:inputType="textPersonName"
+                        android:inputType="textPassword"
                         android:padding="12dp"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/text_color_secondary"
+                        android:hint="Enter current password to make changes"
                         android:layout_marginBottom="16dp" />
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Last Name"
+                        android:text="Email Address"
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/etPrezime"
+                        android:id="@+id/etNewEmail"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/input_background"
-                        android:inputType="textPersonName"
+                        android:inputType="textEmailAddress"
                         android:padding="12dp"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/text_color_secondary"
+                        android:hint="Enter new email address"
                         android:layout_marginBottom="16dp" />
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Age"
+                        android:text="New Password (Optional)"
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/etGodine"
+                        android:id="@+id/etNewPassword"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/input_background"
-                        android:inputType="number"
+                        android:inputType="textPassword"
                         android:padding="12dp"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/text_color_secondary"
+                        android:hint="Leave empty to keep current password"
                         android:layout_marginBottom="16dp" />
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Weight (kg)"
+                        android:text="Confirm New Password"
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/etKilaza"
+                        android:id="@+id/etConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/input_background"
-                        android:inputType="numberDecimal"
+                        android:inputType="textPassword"
                         android:padding="12dp"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/text_color_secondary"
-                        android:layout_marginBottom="16dp" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Height (cm)"
-                        android:textColor="@color/text_color"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/etVisina"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/input_background"
-                        android:inputType="number"
-                        android:padding="12dp"
-                        android:textColor="@color/text_color"
-                        android:textColorHint="@color/text_color_secondary"
+                        android:hint="Confirm new password"
                         android:layout_marginBottom="24dp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-            <!-- Edit Macros Button -->
-            <Button
-                android:id="@+id/btnEditMacros"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Macro Targets"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/primary_green"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:textStyle="bold"
-                android:drawableStart="@android:drawable/ic_menu_edit"
-                android:drawablePadding="8dp"
-                android:padding="12dp" />
-
-            <!-- Account Settings Button -->
-            <Button
-                android:id="@+id/btnAccountSettings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Account Settings"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/primary_green"
-                android:layout_marginBottom="16dp"
-                android:textStyle="bold"
-                android:drawableStart="@android:drawable/ic_menu_manage"
-                android:drawablePadding="8dp"
-                android:padding="12dp" />
 
             <LinearLayout
                 android:id="@+id/buttonLayout"
@@ -203,7 +150,7 @@
                 android:layout_marginTop="16dp">
 
                 <Button
-                    android:id="@+id/btnOtkazi"
+                    android:id="@+id/btnCancel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -211,10 +158,11 @@
                     android:textColor="@android:color/white"
                     android:backgroundTint="@color/button_cancel_color"
                     android:layout_marginEnd="8dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:enabled="false" />
 
                 <Button
-                    android:id="@+id/btnSacuvaj"
+                    android:id="@+id/btnSave"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -222,14 +170,14 @@
                     android:textColor="@android:color/white"
                     android:backgroundTint="@color/button_save_color"
                     android:layout_marginStart="8dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:enabled="false" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/meniFragment"

@@ -15,6 +15,9 @@
             android:name=".editActivity.EditMacrosActivity"
             android:exported="false" />
         <activity
+            android:name=".editActivity.AccountSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".editActivity.CreateObrokActivity"
             android:exported="false" />
         <activity

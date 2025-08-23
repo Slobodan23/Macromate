@@ -26,7 +26,7 @@ import com.example.macromate.model.Korisnik;
 public class ProfilActivity extends AppCompatActivity {
 
     private EditText etIme, etPrezime, etGodine, etKilaza, etVisina;
-    private Button btnSacuvaj, btnOtkazi, btnEditMacros;
+    private Button btnSacuvaj, btnOtkazi, btnEditMacros, btnAccountSettings;
     private LinearLayout buttonLayout;
     private Database database;
     private Korisnik currentUser;
@@ -69,6 +69,7 @@ public class ProfilActivity extends AppCompatActivity {
         btnSacuvaj = findViewById(R.id.btnSacuvaj);
         btnOtkazi = findViewById(R.id.btnOtkazi);
         btnEditMacros = findViewById(R.id.btnEditMacros);
+        btnAccountSettings = findViewById(R.id.btnAccountSettings);
         buttonLayout = findViewById(R.id.buttonLayout);
 
         database = Database.getInstance(this);
@@ -133,10 +134,16 @@ public class ProfilActivity extends AppCompatActivity {
         btnOtkazi.setOnClickListener(v -> resetFields());
         btnSacuvaj.setOnClickListener(v -> saveChanges());
         btnEditMacros.setOnClickListener(v -> openEditMacrosActivity());
+        btnAccountSettings.setOnClickListener(v -> openAccountSettingsActivity());
     }
 
     private void openEditMacrosActivity() {
         Intent intent = new Intent(this, EditMacrosActivity.class);
+        startActivity(intent);
+    }
+
+    private void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 
