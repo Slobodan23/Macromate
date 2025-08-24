@@ -3,7 +3,7 @@
     <!-- Light Mode Colors -->
     <color name="background_color">#F5F5F5</color>
     <color name="text_color">#2A2828</color>
-    <color name="text_color_secondary">#E2E0E0</color>
+    <color name="text_color_secondary">#666666</color>
     <color name="hint_color">#666666</color>
     <color name="shadow_color">#CCCCCC</color>
     <color name="edittext_background">#FFFFFF</color>

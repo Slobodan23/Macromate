@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
@@ -21,13 +22,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.macromate.R;
+import com.example.macromate.auth.WelcomeActivity;
 import com.example.macromate.baza.Database;
 import com.example.macromate.model.Korisnik;
 
 public class AccountSettingsActivity extends AppCompatActivity {
 
     private EditText etCurrentPassword, etNewEmail, etNewPassword, etConfirmPassword;
-    private Button btnSave, btnCancel;
+    private Button btnSave, btnCancel, btnDeleteAccount;
     private LinearLayout buttonLayout;
     private Database database;
     private Korisnik currentUser;
@@ -69,6 +71,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
+        btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         buttonLayout = findViewById(R.id.buttonLayout);
 
         database = Database.getInstance(this);
@@ -133,6 +136,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
     private void setupButtons() {
         btnCancel.setOnClickListener(v -> goToDashboard());
         btnSave.setOnClickListener(v -> saveChanges());
+        btnDeleteAccount.setOnClickListener(v -> showDeleteAccountConfirmation());
     }
 
     private void goToDashboard() {
@@ -213,7 +217,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
             return false;
         }
 
-        // If user wants to change password
+
         if (!newPassword.isEmpty()) {
             if (newPassword.length() < 6) {
                 Toast.makeText(this, "New password must be at least 6 characters long.", Toast.LENGTH_SHORT).show();
@@ -251,5 +255,55 @@ public class AccountSettingsActivity extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, backPressedCallback);
+    }
+
+    private void showDeleteAccountConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Account")
+                .setMessage("Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.")
+                .setPositiveButton("Delete", (dialog, which) -> deleteAccount())
+                .setNegativeButton("Cancel", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void deleteAccount() {
+        String currentPassword = etCurrentPassword.getText().toString().trim();
+
+        if (currentPassword.isEmpty()) {
+            Toast.makeText(this, "Please enter your current password to delete account.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!currentPassword.equals(currentUser.getLozinka())) {
+            Toast.makeText(this, "Current password is incorrect.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("USER_ID");
+            editor.remove("USER_EMAIL");
+            editor.apply();
+
+
+            int deletedRows = database.deleteKorisnik(userId);
+
+            if (deletedRows > 0) {
+                Toast.makeText(this, "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+
+
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Failed to delete account. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Error deleting account. Please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

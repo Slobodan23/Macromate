@@ -80,13 +80,13 @@ public class EditMacrosActivity extends AppCompatActivity {
             return;
         }
 
-        // Load current macro targets or set defaults
+
         Float caloriesTarget = currentUser.getCaloriesTarget();
         Float proteinTarget = currentUser.getProteinTarget();
         Float carbsTarget = currentUser.getCarbsTarget();
         Float fatTarget = currentUser.getFatTarget();
 
-        // Set default values if null
+
         if (caloriesTarget == null) caloriesTarget = 2000.0f;
         if (proteinTarget == null) proteinTarget = 150.0f;
         if (carbsTarget == null) carbsTarget = 250.0f;
